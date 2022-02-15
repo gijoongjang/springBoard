@@ -1,0 +1,28 @@
+spring:
+  #접속DB설정
+  datasource:
+    url: "jdbc:mysql://localhost:3308/test?serverTimezone=UTC&allowPublicKeyRetrieval=true"
+    username: "root"
+    password: "1234"
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+    static-path-pattern: /resources/**
+
+mybatis:
+  # mapper 경로지정
+  mapper-locations: mybatis/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  port: 9099
+  servlet:
+    context-path: /
+  jsp:
+    servlet:
+      init:
+        parameters:
+          development: true
