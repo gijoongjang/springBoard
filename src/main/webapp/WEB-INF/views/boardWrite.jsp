@@ -23,7 +23,7 @@
     <form action="/boardWrite" method="post">
         <div class="form-group">
             <label for="writer">작성자</label>
-            <input type="text" class="form-control" id="writer" name="writer" value="${boardVO.writer}" placeholder="내용을 입력하세요.">
+            <input type="text" class="form-control" id="writer" name="writer" value="${boardVO.writer}" placeholder="이름을 입력하세요.">
             <span class="textColor">${valid_writer}</span>
         </div>
         <div class="form-group">

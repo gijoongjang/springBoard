@@ -45,11 +45,9 @@ public class BoardController {
             }
             return "boardWrite";
         }
-        try {
-            boardService.boardWrite(boardVO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        boardService.boardWrite(boardVO);
+
         return "boardWrite";
         //return "boardList"
     }
