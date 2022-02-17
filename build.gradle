@@ -28,6 +28,8 @@ dependencies {
     implementation group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.6'
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
     implementation 'javax.servlet:jstl'
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    compileOnly(group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.5.Final')
 }
 
 tasks.named('test') {

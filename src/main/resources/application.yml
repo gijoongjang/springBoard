@@ -10,6 +10,13 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
     static-path-pattern: /resources/**
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+    thymeleaf:
+      cache: false
 
 mybatis:
   # mapper 경로지정

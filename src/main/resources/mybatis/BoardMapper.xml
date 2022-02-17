@@ -7,4 +7,14 @@
         SELECT NOW()
         FROM DUAL;
     </select>
+
+    <insert id="boardWrite" parameterType="com.example.board.vo.BoardVO">
+        INSERT INTO BOARD(NO, TITLE, CONTENT, WRITER, REGDATE, VIEWNO)
+        VALUES ( #{no}
+               , #{title}
+               , #{content}
+               , #{writer}
+               , NOW()
+               , #{viewno})
+    </insert>
 </mapper>
