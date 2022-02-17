@@ -9,12 +9,10 @@
     </select>
 
     <insert id="boardWrite" parameterType="com.example.board.vo.BoardVO">
-        INSERT INTO BOARD(NO, TITLE, CONTENT, WRITER, REGDATE, VIEWNO)
-        VALUES ( #{no}
-               , #{title}
+        INSERT INTO BOARD(TITLE, CONTENT, WRITER, REGDATE)
+        VALUES ( #{title}
                , #{content}
                , #{writer}
-               , NOW()
-               , #{viewno})
+               , NOW())
     </insert>
 </mapper>
