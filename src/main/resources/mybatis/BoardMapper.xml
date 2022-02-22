@@ -15,4 +15,9 @@
                , #{writer}
                , NOW())
     </insert>
+
+    <select id="getBoardList" resultType="com.example.board.vo.BoardVO">
+        SELECT *
+        FROM BOARD
+    </select>
 </mapper>

@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -48,9 +49,15 @@ public class BoardController {
 
         boardService.boardWrite(boardVO);
 
-        return "boardWrite";
-        //return "boardList"
+        return "boardList";
     }
 
-    //TODO 게시판 리스트 작성
+    @GetMapping("/boardList")
+    public String boardList(Model model) throws Exception {
+        List<BoardVO> boardList = boardService.getBoardList();
+        model.addAttribute("boardList", boardList);
+        return "boardList";
+    }
+
+    //TODO 게시판 리스트 페이징 처리
 }
