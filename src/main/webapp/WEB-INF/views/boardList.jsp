@@ -11,6 +11,24 @@
 <html>
 <head>
     <title>Title</title>
+    <script type="text/javascript">
+        const fixUrl = "${pageContext.request.contextPath}/boardList";
+
+        function fn_prev(page) {
+            let url = fixUrl + "?pageNum="+page;
+            location.href = url;
+        }
+
+        function fn_curPage(page) {
+            let url = fixUrl + "?pageNum="+page;
+            location.href = url;
+        }
+
+        function fn_next(page) {
+            let url = fixUrl + "?pageNum="+page;
+            location.href = url;
+        }
+    </script>
 </head>
 <body>
 <%@ include file="bootstrap.jsp" %>
@@ -31,10 +49,30 @@
                 <td>${list.no}</td>
                 <td>${list.title}</td>
                 <td>${list.writer}</td>
+                <td>${list.regdate}</td>
                 <td><fmt:formatDate value ="${list.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
             </tr>
         </c:forEach>
     </table>
+    <div id="paginationBox">
+        <ul class="pagination">
+            <c:if test="${pageInfo.previous}">
+                <li class="previous_button">
+                    <a href="#" onclick="fn_prev('${pageInfo.startPage - 1}')">이전</a>
+                </li>
+            </c:if>
+            <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="idx">
+                <li class="page_button ${pageInfo.criteria.pageNum == idx ? "active" :""}">
+                    <a href="#" onclick="fn_curPage('${idx}')">${idx}</a>
+                </li>
+            </c:forEach>
+            <c:if test="${pageInfo.next}">
+                <li class="next_button">
+                    <a href="#" onclick="fn_next('${pageInfo.endPage + 1}')">다음</a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
 </div>
 </body>
 </html>

@@ -16,8 +16,27 @@
                , NOW())
     </insert>
 
-    <select id="getBoardList" resultType="com.example.board.vo.BoardVO">
-        SELECT *
+    <select id="getBoardCount" resultType="int">
+        SELECT count(*)
         FROM BOARD
+    </select>
+
+<!--    <select id="getBoardList" resultType="com.example.board.vo.BoardVO">-->
+<!--        SELECT *-->
+<!--        FROM BOARD LIMIT #{startList}, #{listSize}-->
+<!--    </select>-->
+
+    <select id="getListWithPaging" resultType="com.example.board.vo.BoardVO">
+        <![CDATA[
+        SELECT NO, TITLE, CONTENT, WRITER, REGDATE, VIEWNO
+            FROM (
+                SELECT @ROWNUM := @ROWNUM + 1 AS RNUM, NO, TITLE, CONTENT, WRITER, REGDATE, VIEWNO
+                FROM BOARD, (SELECT @ROWNUM :=0) A
+                ORDER BY NO
+                ) B
+                WHERE RNUM > (#{pageNum} - 1) * #{amount}
+                LIMIT #{amount}
+        ]]>
+
     </select>
 </mapper>

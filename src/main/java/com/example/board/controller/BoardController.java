@@ -2,6 +2,8 @@ package com.example.board.controller;
 
 import com.example.board.service.BoardService;
 import com.example.board.vo.BoardVO;
+import com.example.board.vo.Criteria;
+import com.example.board.vo.PageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -49,15 +50,33 @@ public class BoardController {
 
         boardService.boardWrite(boardVO);
 
-        return "boardList";
+        return "redirect:boardList";
     }
+
+//    @GetMapping("/boardList")
+//    public String boardList(Model model
+//                , @RequestParam(required = false, defaultValue = "1") int page
+//                , @RequestParam(required = false, defaultValue = "1") int range) throws Exception {
+//        int boardCount = boardService.getBoardCount();
+//
+//        Paging paging = new Paging();
+//        paging.pageInfo(page, range, boardCount);
+//
+//        model.addAttribute("boardList", boardService.getBoardList(paging));
+//        model.addAttribute("paging", paging);
+//
+//        return "boardList";
+//    }
 
     @GetMapping("/boardList")
-    public String boardList(Model model) throws Exception {
-        List<BoardVO> boardList = boardService.getBoardList();
-        model.addAttribute("boardList", boardList);
+    public String boardList(Criteria criteria, Model model) throws Exception {
+        int boardCount = boardService.getBoardCount(criteria);
+
+        model.addAttribute("boardList", boardService.getList(criteria));
+        model.addAttribute("pageInfo", new PageDTO(criteria, boardCount));
+
         return "boardList";
     }
 
-    //TODO 게시판 리스트 페이징 처리
+    //TODO 게시판 보기 작성
 }

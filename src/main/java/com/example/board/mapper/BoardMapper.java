@@ -1,6 +1,7 @@
 package com.example.board.mapper;
 
 import com.example.board.vo.BoardVO;
+import com.example.board.vo.Criteria;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,5 +12,7 @@ public interface BoardMapper {
 
     void boardWrite(BoardVO boardVO) throws Exception;
 
-    List<BoardVO> getBoardList() throws Exception;
+    int getBoardCount(Criteria criteria) throws Exception;
+
+    List<BoardVO> getListWithPaging(Criteria criteria);
 }

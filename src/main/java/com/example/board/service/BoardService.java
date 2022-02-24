@@ -2,12 +2,12 @@ package com.example.board.service;
 
 import com.example.board.mapper.BoardMapper;
 import com.example.board.vo.BoardVO;
+import com.example.board.vo.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +37,11 @@ public class BoardService {
         return validateResult;
     }
 
-    public List<BoardVO> getBoardList() throws Exception {
-        return boardMapper.getBoardList();
+    public int getBoardCount(Criteria criteria) throws Exception {
+        return boardMapper.getBoardCount(criteria);
+    }
+
+    public List<BoardVO> getList(Criteria criteria) {
+        return boardMapper.getListWithPaging(criteria);
     }
 }
