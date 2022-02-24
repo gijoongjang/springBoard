@@ -1,10 +1,10 @@
 spring:
   #접속DB설정
   datasource:
-    url: "jdbc:mysql://localhost:3308/test?serverTimezone=UTC&allowPublicKeyRetrieval=true"
+    url: "jdbc:log4jdbc:mysql://localhost:3308/test?serverTimezone=UTC&allowPublicKeyRetrieval=true"
     username: "root"
     password: "1234"
-    driver-class-name: "com.mysql.cj.jdbc.Driver"
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
   mvc:
     view:
       prefix: /WEB-INF/views/

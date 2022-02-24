@@ -30,6 +30,7 @@ dependencies {
     implementation 'javax.servlet:jstl'
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     compileOnly(group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.5.Final')
+    compileOnly group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
 
 tasks.named('test') {
