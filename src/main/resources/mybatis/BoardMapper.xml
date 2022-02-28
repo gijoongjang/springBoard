@@ -39,4 +39,9 @@
         ]]>
 
     </select>
+
+    <select id="getDetailBoard" resultType="com.example.board.vo.BoardVO">
+        SELECT * FROM BOARD
+        WHERE NO = #{no}
+    </select>
 </mapper>

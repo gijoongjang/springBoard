@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -78,5 +79,14 @@ public class BoardController {
         return "boardList";
     }
 
-    //TODO 게시판 보기 작성
+    @GetMapping("/boardDetail")
+    public String boardRead(@RequestParam("no") int no, Model model) throws Exception {
+        BoardVO boardVO = boardService.getDetailBoard(no);
+
+        model.addAttribute("boardVO", boardVO);
+
+        return "boardDetail";
+    }
+
+    //TODO 게시판 수정, 삭제
 }

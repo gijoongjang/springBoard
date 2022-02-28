@@ -15,4 +15,6 @@ public interface BoardMapper {
     int getBoardCount(Criteria criteria) throws Exception;
 
     List<BoardVO> getListWithPaging(Criteria criteria);
+
+    BoardVO getDetailBoard(int no);
 }

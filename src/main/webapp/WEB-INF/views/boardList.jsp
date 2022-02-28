@@ -45,11 +45,10 @@
             <th>등록일</th>
         </tr>
         <c:forEach var="list" items="${boardList}">
-            <tr>
+            <tr onclick="location.href='/boardDetail?no=${list.no}'">
                 <td>${list.no}</td>
                 <td>${list.title}</td>
                 <td>${list.writer}</td>
-                <td>${list.regdate}</td>
                 <td><fmt:formatDate value ="${list.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
             </tr>
         </c:forEach>

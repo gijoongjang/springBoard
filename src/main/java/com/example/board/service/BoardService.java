@@ -44,4 +44,8 @@ public class BoardService {
     public List<BoardVO> getList(Criteria criteria) {
         return boardMapper.getListWithPaging(criteria);
     }
+
+    public BoardVO getDetailBoard(int no) {
+        return boardMapper.getDetailBoard(no);
+    }
 }
