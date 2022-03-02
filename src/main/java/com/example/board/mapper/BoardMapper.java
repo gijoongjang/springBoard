@@ -14,7 +14,13 @@ public interface BoardMapper {
 
     int getBoardCount(Criteria criteria) throws Exception;
 
-    List<BoardVO> getListWithPaging(Criteria criteria);
+    List<BoardVO> getListWithPaging(Criteria criteria) throws Exception;
 
-    BoardVO getDetailBoard(int no);
+    BoardVO getDetailBoard(int no) throws Exception;
+
+    void boardModifyForm(int no) throws Exception;
+
+    void boardModify(BoardVO boardVO) throws Exception;
+
+    void boardDelete(int no) throws Exception;
 }

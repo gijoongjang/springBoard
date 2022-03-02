@@ -5,6 +5,7 @@ import com.example.board.vo.BoardVO;
 import com.example.board.vo.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
@@ -41,11 +42,25 @@ public class BoardService {
         return boardMapper.getBoardCount(criteria);
     }
 
-    public List<BoardVO> getList(Criteria criteria) {
+    public List<BoardVO> getList(Criteria criteria) throws Exception{
         return boardMapper.getListWithPaging(criteria);
     }
 
-    public BoardVO getDetailBoard(int no) {
+    public BoardVO getDetailBoard(int no) throws Exception {
         return boardMapper.getDetailBoard(no);
+    }
+
+    public void boardModifyForm(int no) throws Exception {
+        boardMapper.boardModifyForm(no);
+    }
+
+    @Transactional
+    public void boardModify(BoardVO boardVO) throws Exception {
+        boardMapper.boardModify(boardVO);
+    }
+
+    @Transactional
+    public void boardDelete(int no) throws Exception {
+        boardMapper.boardDelete(no);
     }
 }

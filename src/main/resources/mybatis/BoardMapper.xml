@@ -44,4 +44,17 @@
         SELECT * FROM BOARD
         WHERE NO = #{no}
     </select>
+
+    <update id="boardModify" parameterType="com.example.board.vo.BoardVO">
+        UPDATE BOARD
+        SET TITLE   = #{title},
+            CONTENT = #{content}
+        WHERE NO = #{no}
+    </update>
+
+    <delete id="boardDelete" parameterType="int">
+        DELETE
+        FROM BOARD
+        WHERE NO = #{no}
+    </delete>
 </mapper>

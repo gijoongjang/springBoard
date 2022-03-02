@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>게시글목록</title>
     <script type="text/javascript">
         const fixUrl = "${pageContext.request.contextPath}/boardList";
 
@@ -35,7 +35,7 @@
 <div class="container">
     <h2>게시글 목록</h2>
     <br/>
-    <button class="btn btn-primary" onclick="location.href='/boardWrite'">글쓰기</button>
+    <button class="btn btn-primary" onclick="location.href='/boardWriteForm'">글쓰기</button>
     <br/>
     <table class="table table-hover">
         <tr>

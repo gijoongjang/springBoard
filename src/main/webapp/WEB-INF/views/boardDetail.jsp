@@ -10,6 +10,15 @@
 <html>
 <head>
     <title>Title</title>
+    <script type="text/javascript">
+        let message = '${message}';
+        if(message === "success") {
+            alert("삭제완료!")
+            location.href="/boardList";
+        } else if(message === "fail") {
+            console.log("삭제실패!!");
+        }
+    </script>
 </head>
 <body>
 <%@ include file="bootstrap.jsp" %>
@@ -38,8 +47,8 @@
         </div>
         <br/>
         <button type="button" class="btn btn-info" onclick="location.href='/boardList'">뒤로가기</button>
-        <button type="button" class="btn btn-success">수정하기</button>
-        <button type="button" class="btn btn-danger">삭제하기</button>
+        <button type="button" id="modify" class="btn btn-success" onclick="location.href='boardModifyForm?no=${boardVO.no}'">수정하기</button>
+        <button type="button" id="delete" class="btn btn-danger" onclick="location.href='boardDelete?no=${boardVO.no}'">삭제하기</button>
     </div>
 </body>
 </html>
