@@ -81,7 +81,7 @@ public class BoardService {
     }
 
     public List<String> getErrorMessage(BindingResult bindingResult) {
-        List<String> message = new ArrayList<>();
+        List<String> message = new ArrayList<String>();
 
         if(bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(x -> {
