@@ -2,6 +2,7 @@ package com.example.board.mapper;
 
 import com.example.board.vo.BoardVO;
 import com.example.board.vo.Criteria;
+import com.example.board.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -23,4 +24,8 @@ public interface BoardMapper {
     void boardModify(BoardVO boardVO) throws Exception;
 
     void boardDelete(int no) throws Exception;
+
+    UserVO userLogin(UserVO userVO) throws Exception;
+
+    void createUser(UserVO userVO) throws Exception;
 }

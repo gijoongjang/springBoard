@@ -4,19 +4,25 @@ import com.example.board.service.BoardService;
 import com.example.board.vo.BoardVO;
 import com.example.board.vo.Criteria;
 import com.example.board.vo.PageDTO;
+import com.example.board.vo.UserVO;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,7 +38,7 @@ public class BoardController {
         return "now";
     }
 
-    @GetMapping
+    @GetMapping()
     public String root() throws Exception {
         return "index";
     }
@@ -129,5 +135,44 @@ public class BoardController {
         return mav;
     }
 
-    //TODO USER LOGIN
+    @GetMapping("/login")
+    public String login() throws Exception {
+        return "index";
+    }
+
+    @RequestMapping(value="/index", method = {RequestMethod.GET, RequestMethod.POST})
+    public String userLogin(UserVO userVO, HttpServletRequest request, RedirectAttributes ra) throws Exception {
+        HttpSession session = request.getSession();
+        UserVO user = boardService.userLogin(userVO);
+
+        if(user == null) {
+            session.setAttribute("user", null);
+        } else {
+            session.setAttribute("user", user);
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/signUpForm")
+    public String signUpForm() {
+        return "signUp";
+    }
+
+    //TODO 아이디 중복 체크
+    @PostMapping("/signUp")
+    @ResponseBody
+    public Map<String, Object> signUp(@RequestBody @Valid UserVO userVO, BindingResult bindingResult) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+
+        if(!bindingResult.hasErrors()){
+            result.put("message", true);
+            boardService.createUser(userVO);
+        } else {
+            result.put("message", false);
+            result.put("errMessage", boardService.getErrorMessage(bindingResult));
+        }
+
+        return result;
+    }
 }
