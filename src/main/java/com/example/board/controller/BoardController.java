@@ -187,4 +187,6 @@ public class BoardController {
 
         return "redirect:/login";
     }
+
+    //TODO 조회수 증가 작업 필요
 }

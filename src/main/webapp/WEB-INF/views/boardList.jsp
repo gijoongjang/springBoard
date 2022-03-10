@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>게시글목록</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
     <script type="text/javascript">
         const fixUrl = "${pageContext.request.contextPath}/boardList";
 
@@ -33,44 +34,53 @@
 <body>
 <%@ include file="bootstrap.jsp" %>
 <div class="container">
-    <h2>게시글 목록</h2>
-    <br/>
-    <button class="btn btn-primary" onclick="location.href='/boardWriteForm'">글쓰기</button>
-    <br/>
-    <table class="table table-hover">
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>저자</th>
-            <th>등록일</th>
-        </tr>
-        <c:forEach var="list" items="${boardList}">
-            <tr onclick="location.href='/boardDetail?no=${list.no}'">
-                <td>${list.no}</td>
-                <td>${list.title}</td>
-                <td>${list.writer}</td>
-                <td><fmt:formatDate value ="${list.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
+    <div class="header">
+        <c:import url="/WEB-INF/views/header.jsp"></c:import>
+    </div>
+    <br/><br/>
+    <div class="content">
+        <h2>게시글 목록</h2>
+        <br/>
+        <button class="btn btn-primary" onclick="location.href='/boardWriteForm'">글쓰기</button>
+        <br/>
+        <table class="table table-hover">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>저자</th>
+                <th>등록일</th>
             </tr>
-        </c:forEach>
-    </table>
-    <div id="paginationBox">
-        <ul class="pagination">
-            <c:if test="${pageInfo.previous}">
-                <li class="previous_button">
-                    <a href="#" onclick="fn_prev('${pageInfo.startPage - 1}')">이전</a>
-                </li>
-            </c:if>
-            <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="idx">
-                <li class="page_button ${pageInfo.criteria.pageNum == idx ? "active" :""}">
-                    <a href="#" onclick="fn_curPage('${idx}')">${idx}</a>
-                </li>
+            <c:forEach var="list" items="${boardList}">
+                <tr onclick="location.href='/boardDetail?no=${list.no}'">
+                    <td>${list.no}</td>
+                    <td>${list.title}</td>
+                    <td>${list.writer}</td>
+                    <td><fmt:formatDate value ="${list.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
+                </tr>
             </c:forEach>
-            <c:if test="${pageInfo.next}">
-                <li class="next_button">
-                    <a href="#" onclick="fn_next('${pageInfo.endPage + 1}')">다음</a>
-                </li>
-            </c:if>
-        </ul>
+        </table>
+        <div id="paginationBox">
+            <ul class="pagination">
+                <c:if test="${pageInfo.previous}">
+                    <li class="previous_button">
+                        <a href="#" onclick="fn_prev('${pageInfo.startPage - 1}')">이전</a>
+                    </li>
+                </c:if>
+                <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="idx">
+                    <li class="page_button ${pageInfo.criteria.pageNum == idx ? "active" :""}">
+                        <a href="#" onclick="fn_curPage('${idx}')">${idx}</a>
+                    </li>
+                </c:forEach>
+                <c:if test="${pageInfo.next}">
+                    <li class="next_button">
+                        <a href="#" onclick="fn_next('${pageInfo.endPage + 1}')">다음</a>
+                    </li>
+                </c:if>
+            </ul>
+        </div>
+    </div>
+    <div id="footer">
+        <c:import url="/WEB-INF/views/footer.jsp"></c:import>
     </div>
 </div>
 </body>

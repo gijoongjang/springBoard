@@ -14,8 +14,17 @@
 </head>
 <body>
 <%@ include file="bootstrap.jsp" %>
-    <div class="container">
+    <div class="header">
         <c:import url="/WEB-INF/views/header.jsp"></c:import>
+    </div>
+    <div id="navigation">
+        <c:import url="/WEB-INF/views/navigation.jsp"></c:import>
+    </div>
+    <div id="content">
+
+    </div>
+    <div id="footer">
+        <c:import url="/WEB-INF/views/footer.jsp"></c:import>
     </div>
 </body>
 </html>

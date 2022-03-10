@@ -4,14 +4,22 @@
     margin: 0;
     padding: 0
 }
+
 body {
     font: 0.75em "맑은 고딕", 돋움, 굴림;
-    text-align: center
 }
+
 ul, ol {
     list-style-type: none
 }
-/* header */
+
+div#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
 div#header	h1 {
     height: 70px;
     line-height: 70px;
@@ -26,7 +34,7 @@ div#header	ul {
 }
 
 div#header	li {
-    float: right
+    float: right;
 }
 
 div#header	li a {
@@ -35,3 +43,27 @@ div#header	li a {
     margin-left: 10px;
     text-decoration: none;
 }
+
+div#navigation {
+    padding-top: 10px;
+}
+
+div#content {
+    padding-top: 150px;
+    padding-bottom: 150px;
+}
+
+div#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background-color: #515151;
+    color: #FFF
+}
+div#footer #footerText {
+    text-align: center;
+}
+
+
