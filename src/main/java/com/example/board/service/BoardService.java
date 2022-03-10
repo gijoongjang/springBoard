@@ -1,10 +1,16 @@
 package com.example.board.service;
 
 import com.example.board.mapper.BoardMapper;
+import com.example.board.security.CustomUserDetails;
 import com.example.board.vo.BoardVO;
 import com.example.board.vo.Criteria;
 import com.example.board.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BoardService {
+public class BoardService implements UserDetailsService {
 
     @Autowired
     BoardMapper boardMapper;
@@ -90,5 +96,30 @@ public class BoardService {
         }
 
         return message;
+    }
+
+    public int idCheck(String id) throws Exception {
+        return boardMapper.idCheck(id);
+    }
+
+    @Override
+    public CustomUserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        UserVO userVO = boardMapper.findById(id);
+        CustomUserDetails customUserDetails = new CustomUserDetails();
+
+        if(userVO == null) {
+            throw new UsernameNotFoundException(id);
+        }
+
+        customUserDetails.setUsername(userVO.getId());
+        customUserDetails.setPassword(userVO.getPassword());
+        customUserDetails.setName(userVO.getName());
+
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(userVO.getRole()));
+
+        customUserDetails.setAuthorities(authorities);
+
+        return customUserDetails;
     }
 }

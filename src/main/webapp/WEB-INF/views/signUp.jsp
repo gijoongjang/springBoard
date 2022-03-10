@@ -30,6 +30,30 @@
                 }
             });
         }
+
+        function fn_icChk(){
+            let id = $('#id').val();
+
+            if(id === "") {
+                alert("아이디를 입력하세요.")
+                return false;
+            }
+
+            $.ajax({
+                url:"/idCheck",
+                type:"POST",
+                contentType:"application/json",
+                data:id
+            }).then(function(count){
+                if(count > 0) {
+                    alert("아이디가 이미 사용중입니다.");
+                    $("#sign").prop("disabled", true);
+                } else {
+                    alert("사용가능한 아이디입니다.");
+                    $("#sign").prop("disabled", false);
+                }
+            })
+        }
     </script>
 </head>
 <body>
@@ -40,6 +64,7 @@
         <div class="form-group">
             <label for="id">아이디</label>
             <input type="text" class="form-control" id="id" name="id">
+            <button type="button" class="btn btn-primary" onclick="fn_icChk()">아이디 확인</button>
         </div>
         <div class="form-group">
             <label for="password">비밀번호</label>
@@ -49,7 +74,7 @@
             <label for="name">이름</label>
             <input type="text" class="form-control" id="name" name="name">
         </div>
-        <button id="button" class="btn btn-primary" onclick="fn_submit()">가입</button>
+        <button id="sign" class="btn btn-primary" onclick="fn_submit()">가입</button>
 <%--    </form>--%>
 </div>
 </body>

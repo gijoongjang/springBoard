@@ -14,4 +14,5 @@ public class UserVO {
     @NotEmpty(message = "이름을 입력하세요")
     private String name;
     private Date regdate;
+    private String role;
 }

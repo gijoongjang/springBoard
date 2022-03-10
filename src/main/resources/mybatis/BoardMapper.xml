@@ -72,4 +72,16 @@
         INSERT INTO USER(ID, PASSWORD, NAME, REGDATE)
         VALUES (#{id}, #{password}, #{name}, NOW())
     </insert>
+
+    <select id="idCheck" parameterType="String" resultType="int">
+        SELECT COUNT(*) AS CNT
+        FROM USER
+        WHERE ID = #{id}
+    </select>
+
+    <select id="findById" resultType="com.example.board.vo.UserVO">
+        SELECT *
+        FROM USER
+        WHERE ID = #{id}
+    </select>
 </mapper>

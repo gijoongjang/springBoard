@@ -28,4 +28,8 @@ public interface BoardMapper {
     UserVO userLogin(UserVO userVO) throws Exception;
 
     void createUser(UserVO userVO) throws Exception;
+
+    int idCheck(String id) throws Exception;
+
+    UserVO findById(String username);
 }
