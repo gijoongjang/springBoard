@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +48,7 @@ public class BoardController {
 
     @PostMapping("/boardWrite")
     public String boardWrite(@Validated BoardVO boardVO, Errors errors, Model model) throws Exception {
-        if(errors.hasErrors()) {
+        if (errors.hasErrors()) {
             model.addAttribute("boardVO", boardVO);
             Map<String, String> validationResult = boardService.validateHandling(errors);
             for (String key : validationResult.keySet()) {
@@ -84,10 +88,38 @@ public class BoardController {
     }
 
     @GetMapping("/boardDetail")
-    public String boardRead(@RequestParam("no") int no, Model model) throws Exception {
+    public String boardRead(@RequestParam("no") int no,
+                            Model model,
+                            HttpServletRequest request,
+                            HttpServletResponse response) throws Exception {
         BoardVO boardVO = boardService.getDetailBoard(no);
 
         model.addAttribute("boardVO", boardVO);
+
+        //조회수 쿠키 체크
+        Cookie[] cookies = request.getCookies();
+        Cookie viewCookie = null;
+
+        if(cookies != null && cookies.length > 0) {
+            for(Cookie cookie : cookies) {
+                if(cookie.getName().equals("cookie"+no)) {
+                    viewCookie = cookie;
+                }
+            }
+        }
+
+        if(viewCookie == null) {
+            Cookie newCookie = new Cookie("cookie"+no, "|" + no + "|");
+
+            response.addCookie(newCookie);
+
+            try {
+                boardService.viewNoUp(no);
+                System.out.println("조회수증가");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         return "boardDetail";
     }
@@ -124,7 +156,7 @@ public class BoardController {
             e.printStackTrace();
         }
 
-        mav.setViewName("forward:boardDetail?no="+no);
+        mav.setViewName("forward:boardDetail?no=" + no);
 
         return mav;
     }
@@ -158,7 +190,7 @@ public class BoardController {
     public Map<String, Object> signUp(@RequestBody @Valid UserVO userVO, BindingResult bindingResult) throws Exception {
         Map<String, Object> result = new HashMap<>();
 
-        if(!bindingResult.hasErrors()){
+        if (!bindingResult.hasErrors()) {
             result.put("message", true);
             boardService.createUser(userVO);
         } else {
@@ -188,5 +220,5 @@ public class BoardController {
         return "redirect:/login";
     }
 
-    //TODO 조회수 증가 작업 필요
+    //TODO 게시판 작성자 = 로그인 유저 처리
 }

@@ -41,10 +41,6 @@
             <label class="form-label">등록일</label>
             <input type="text" class="form-control" value="<fmt:formatDate value ="${boardVO.regdate}" pattern="yyyy-MM-dd HH:mm"/>" readonly>
         </div>
-        <div class="mb-3">
-            <label class="form-label">조회 수</label>
-            <input type="text" class="form-control" value="${boardVO.viewno}" readonly>
-        </div>
         <br/>
         <button type="button" class="btn btn-info" onclick="location.href='/boardList'">뒤로가기</button>
         <button type="button" id="modify" class="btn btn-success" onclick="location.href='boardModifyForm?no=${boardVO.no}'">수정하기</button>

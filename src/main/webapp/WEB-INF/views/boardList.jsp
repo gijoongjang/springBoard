@@ -49,6 +49,7 @@
                 <th>제목</th>
                 <th>저자</th>
                 <th>등록일</th>
+                <th>조회 수</th>
             </tr>
             <c:forEach var="list" items="${boardList}">
                 <tr onclick="location.href='/boardDetail?no=${list.no}'">
@@ -56,6 +57,7 @@
                     <td>${list.title}</td>
                     <td>${list.writer}</td>
                     <td><fmt:formatDate value ="${list.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
+                    <td>${list.viewno}</td>
                 </tr>
             </c:forEach>
         </table>

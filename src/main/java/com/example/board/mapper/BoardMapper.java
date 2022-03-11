@@ -25,11 +25,13 @@ public interface BoardMapper {
 
     void boardDelete(int no) throws Exception;
 
-    UserVO userLogin(UserVO userVO) throws Exception;
+//    UserVO userLogin(UserVO userVO) throws Exception;
 
     void createUser(UserVO userVO) throws Exception;
 
     int idCheck(String id) throws Exception;
 
     UserVO findById(String username);
+
+    void viewNoUp(int no) throws Exception;
 }

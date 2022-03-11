@@ -74,9 +74,9 @@ public class BoardService implements UserDetailsService {
         boardMapper.boardDelete(no);
     }
 
-    public UserVO userLogin(UserVO userVO) throws Exception {
-        return boardMapper.userLogin(userVO);
-    }
+//    public UserVO userLogin(UserVO userVO) throws Exception {
+//        return boardMapper.userLogin(userVO);
+//    }
 
     @Transactional
     public void createUser(UserVO userVO) throws Exception {
@@ -121,5 +121,10 @@ public class BoardService implements UserDetailsService {
         customUserDetails.setAuthorities(authorities);
 
         return customUserDetails;
+    }
+
+    @Transactional
+    public void viewNoUp(int no) throws Exception {
+        boardMapper.viewNoUp(no);
     }
 }

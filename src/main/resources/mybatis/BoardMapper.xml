@@ -60,13 +60,13 @@
         WHERE NO = #{no}
     </delete>
 
-    <select id="userLogin" resultType="com.example.board.vo.UserVO">
-        SELECT ID, PASSWORD
-        FROM USER
-        WHERE ID = #{id}
-          AND PASSWORD = #{password}
+<!--    <select id="userLogin" resultType="com.example.board.vo.UserVO">-->
+<!--        SELECT ID, PASSWORD-->
+<!--        FROM USER-->
+<!--        WHERE ID = #{id}-->
+<!--          AND PASSWORD = #{password}-->
 
-    </select>
+<!--    </select>-->
 
     <insert id="createUser" parameterType="com.example.board.vo.UserVO">
         INSERT INTO USER(ID, PASSWORD, NAME, REGDATE)
@@ -84,4 +84,10 @@
         FROM USER
         WHERE ID = #{id}
     </select>
+
+    <update id="viewNoUp" parameterType="int">
+        UPDATE BOARD
+        SET VIEWNO = VIEWNO + 1
+        WHERE NO = #{no}
+    </update>
 </mapper>
