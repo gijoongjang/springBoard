@@ -6,6 +6,7 @@ import com.example.board.vo.Criteria;
 import com.example.board.vo.PageDTO;
 import com.example.board.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -219,6 +220,4 @@ public class BoardController {
 
         return "redirect:/login";
     }
-
-    //TODO 게시판 작성자 = 로그인 유저 처리
 }

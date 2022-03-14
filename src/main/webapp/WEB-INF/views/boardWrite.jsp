@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -28,8 +29,8 @@
         <form action="/boardWrite" method="post">
             <div class="form-group">
                 <label for="writer">작성자</label>
-                <input type="text" class="form-control" id="writer" name="writer" value="${boardVO.writer}" placeholder="이름을 입력하세요.">
-                <span class="textColor">${valid_writer}</span>
+                <input type="text" class="form-control" id="writer" name="writer" value="<sec:authentication property="principal.name"/>" readonly>
+<%--                <span class="textColor">${valid_writer}</span>--%>
             </div>
             <div class="form-group">
                 <label for="title">제목</label>
