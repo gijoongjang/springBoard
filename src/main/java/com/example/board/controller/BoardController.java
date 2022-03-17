@@ -1,6 +1,6 @@
 package com.example.board.controller;
 
-import com.example.board.Util.FileUtil;
+import com.example.board.util.FileUtil;
 import com.example.board.security.CustomUserDetails;
 import com.example.board.service.BoardService;
 import com.example.board.vo.*;
@@ -86,7 +86,7 @@ public class BoardController {
                 fileVO.setFilename(FileUtil.getNewFileName(fileName));
                 fileVO.setUpload_path(uploadPath + fileName);
                 fileVO.setFilesize(x.getSize());
-                fileVO.setFiletype(x.getContentType());
+                fileVO.setFiletype(FileUtil.getContentType(fileName));
                 fileVO.setCreateuser(user.getName());   //로그인 유저
 
                 try {

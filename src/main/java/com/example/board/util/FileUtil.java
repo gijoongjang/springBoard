@@ -1,4 +1,4 @@
-package com.example.board.Util;
+package com.example.board.util;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -18,5 +18,12 @@ public class FileUtil {
         UUID uuid = UUID.randomUUID();
 
         return String.format("%s_%s", uuid.toString(), fileName);
+    }
+
+    public static String getContentType(String fileName) {
+        if(fileName.equals("") || fileName == null)
+            return "";
+
+        return fileName.split("\\.")[1];
     }
 }

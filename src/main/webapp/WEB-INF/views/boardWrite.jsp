@@ -31,7 +31,7 @@
                     $('.add').append('<li><input type="file" name="file_path" class="files"><button type="button" class="delBtn" onclick="fn_addDel(this);">삭제</button></li>')
                     limitedFileCnt++;
                 }
-            })
+            });
         });
 
         function fn_addDel(e) {
