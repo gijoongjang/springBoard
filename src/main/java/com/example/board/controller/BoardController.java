@@ -1,18 +1,18 @@
 package com.example.board.controller;
 
+import com.example.board.Util.FileUtil;
+import com.example.board.security.CustomUserDetails;
 import com.example.board.service.BoardService;
-import com.example.board.vo.BoardVO;
-import com.example.board.vo.Criteria;
-import com.example.board.vo.PageDTO;
-import com.example.board.vo.UserVO;
+import com.example.board.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,12 +20,16 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Arrays;
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class BoardController {
+
+    @Value("${file.path}")
+    private String filePath;
 
     @Autowired
     BoardService boardService;
@@ -48,19 +52,55 @@ public class BoardController {
     }
 
     @PostMapping("/boardWrite")
-    public String boardWrite(@Validated BoardVO boardVO, Errors errors, Model model) throws Exception {
-        if (errors.hasErrors()) {
-            model.addAttribute("boardVO", boardVO);
-            Map<String, String> validationResult = boardService.validateHandling(errors);
-            for (String key : validationResult.keySet()) {
-                model.addAttribute(key, validationResult.get(key));
-            }
-            return "boardWrite";
+    @ResponseBody
+    public Map<String, Object> boardWrite(@RequestPart( value = "data", required = false) @Validated BoardVO boardVO, BindingResult bindingResult
+            , @RequestPart(value = "uploadFiles", required = false) List<MultipartFile> fileList
+            , @AuthenticationPrincipal CustomUserDetails user) throws Exception {
+
+        FileVO fileVO = new FileVO();
+        int maxBoardNo = boardService.getBoardNo();
+        Map<String, Object> retMap = new HashMap<>();
+
+        if (bindingResult.hasErrors()) {
+            retMap.put("succeed", false);
+            retMap.put("errMessage", boardService.getErrorMessage(bindingResult));
+            return retMap;
         }
 
         boardService.boardWrite(boardVO);
 
-        return "redirect:boardList";
+        File uploadPath = new File(filePath + FileUtil.makePath());
+
+        if(fileList != null) {
+            fileList.forEach(x->{
+                String fileName = x.getOriginalFilename();
+
+                if(!uploadPath.exists()) {
+                    uploadPath.mkdirs();
+                }
+
+                File saveFile = new File(uploadPath, fileName);
+
+                fileVO.setBno(maxBoardNo);
+                fileVO.setOriginal_filename(fileName);
+                fileVO.setFilename(FileUtil.getNewFileName(fileName));
+                fileVO.setUpload_path(uploadPath + fileName);
+                fileVO.setFilesize(x.getSize());
+                fileVO.setFiletype(x.getContentType());
+                fileVO.setCreateuser(user.getName());   //로그인 유저
+
+                try {
+                    x.transferTo(saveFile);
+                    boardService.insertFiles(fileVO);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        retMap.put("succeed", true);
+
+        return retMap;
     }
 
 //    @GetMapping("/boardList")

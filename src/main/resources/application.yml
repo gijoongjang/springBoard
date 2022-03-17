@@ -5,6 +5,10 @@ spring:
     username: "root"
     password: "1234"
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
   mvc:
     view:
       prefix: /WEB-INF/views/
@@ -33,3 +37,7 @@ server:
       init:
         parameters:
           development: true
+
+#파일저장경로
+file:
+  path: C:/file/

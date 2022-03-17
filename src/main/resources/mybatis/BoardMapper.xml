@@ -90,4 +90,13 @@
         SET VIEWNO = VIEWNO + 1
         WHERE NO = #{no}
     </update>
+
+    <insert id="insertFiles" parameterType="com.example.board.vo.FileVO">
+        INSERT INTO FILE(BNO, FILENAME, ORIGINAL_FILENAME, UPLOAD_PATH, FILESIZE, FILETYPE, CREATEDATE, CREATEUSER)
+        VALUES (#{bno}, #{filename}, #{original_filename}, #{upload_path}, #{filesize}, #{filetype}, now(), #{createuser})
+    </insert>
+
+    <select id="getBoardNo" resultType="int">
+        SELECT MAX(NO) + 1 FROM BOARD
+    </select>
 </mapper>

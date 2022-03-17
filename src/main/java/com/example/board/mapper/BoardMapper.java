@@ -2,6 +2,7 @@ package com.example.board.mapper;
 
 import com.example.board.vo.BoardVO;
 import com.example.board.vo.Criteria;
+import com.example.board.vo.FileVO;
 import com.example.board.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -34,4 +35,8 @@ public interface BoardMapper {
     UserVO findById(String username);
 
     void viewNoUp(int no) throws Exception;
+
+    void insertFiles(FileVO fileVO) throws Exception;
+
+    int getBoardNo() throws Exception;
 }

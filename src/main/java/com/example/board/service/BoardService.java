@@ -4,6 +4,7 @@ import com.example.board.mapper.BoardMapper;
 import com.example.board.security.CustomUserDetails;
 import com.example.board.vo.BoardVO;
 import com.example.board.vo.Criteria;
+import com.example.board.vo.FileVO;
 import com.example.board.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,16 +38,16 @@ public class BoardService implements UserDetailsService {
         boardMapper.boardWrite(boardVO);
     }
 
-    public Map<String, String> validateHandling(Errors errors) {
-        Map<String, String> validateResult = new HashMap<String, String>();
-
-        for(FieldError error : errors.getFieldErrors()) {
-            String key = String.format("valid_%s", error.getField());
-            validateResult.put(key, error.getDefaultMessage());
-        }
-
-        return validateResult;
-    }
+//    public Map<String, String> validateHandling(Errors errors) {
+//        Map<String, String> validateResult = new HashMap<String, String>();
+//
+//        for(FieldError error : errors.getFieldErrors()) {
+//            String key = String.format("valid_%s", error.getField());
+//            validateResult.put(key, error.getDefaultMessage());
+//        }
+//
+//        return validateResult;
+//    }
 
     public int getBoardCount(Criteria criteria) throws Exception {
         return boardMapper.getBoardCount(criteria);
@@ -126,5 +127,14 @@ public class BoardService implements UserDetailsService {
     @Transactional
     public void viewNoUp(int no) throws Exception {
         boardMapper.viewNoUp(no);
+    }
+
+    @Transactional
+    public void insertFiles(FileVO fileVO) throws Exception {
+        boardMapper.insertFiles(fileVO);
+    }
+
+    public int getBoardNo() throws Exception {
+        return boardMapper.getBoardNo();
     }
 }
