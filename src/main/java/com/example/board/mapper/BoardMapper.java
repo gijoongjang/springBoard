@@ -39,4 +39,6 @@ public interface BoardMapper {
     void insertFiles(FileVO fileVO) throws Exception;
 
     int getBoardNo() throws Exception;
+
+    List<FileVO> getFileList(int bno) throws Exception;
 }

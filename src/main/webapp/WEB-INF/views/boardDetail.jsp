@@ -9,7 +9,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
     <script type="text/javascript">
         let message = '${message}';
         if(message === "success") {
@@ -18,6 +20,23 @@
         } else if(message === "fail") {
             console.log("삭제실패!!");
         }
+
+        $(function () {
+            let data = JSON.parse('${files}');
+            let str = "";
+
+            data.forEach(function (e, i){
+                console.log(e)
+
+                if(e.filetype.toUpperCase().includes('PNG') || e.filetype.toUpperCase().includes('JPG')) {
+                    str += "<li><img src = '/imageDisplay?filePath=" + encodeURI(e.upload_path.replace(/--/g, "\\")) + "'>" + e.original_filename + "</li>";
+                } else {
+                    str += "<li><img src = '/resources/img/file.png'>" + e.filename + "</li>";
+                }
+            })
+
+            $('.fileList ul').append(str);
+        });
     </script>
 </head>
 <body>
@@ -40,6 +59,11 @@
         <div class="mb-3">
             <label class="form-label">등록일</label>
             <input type="text" class="form-control" value="<fmt:formatDate value ="${boardVO.regdate}" pattern="yyyy-MM-dd HH:mm"/>" readonly>
+        </div>
+        <div class="fileList">
+            <ul>
+
+            </ul>
         </div>
         <br/>
         <button type="button" class="btn btn-info" onclick="location.href='/boardList'">뒤로가기</button>

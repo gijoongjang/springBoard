@@ -60,13 +60,13 @@
         WHERE NO = #{no}
     </delete>
 
-<!--    <select id="userLogin" resultType="com.example.board.vo.UserVO">-->
-<!--        SELECT ID, PASSWORD-->
-<!--        FROM USER-->
-<!--        WHERE ID = #{id}-->
-<!--          AND PASSWORD = #{password}-->
+    <!--    <select id="userLogin" resultType="com.example.board.vo.UserVO">-->
+    <!--        SELECT ID, PASSWORD-->
+    <!--        FROM USER-->
+    <!--        WHERE ID = #{id}-->
+    <!--          AND PASSWORD = #{password}-->
 
-<!--    </select>-->
+    <!--    </select>-->
 
     <insert id="createUser" parameterType="com.example.board.vo.UserVO">
         INSERT INTO USER(ID, PASSWORD, NAME, REGDATE)
@@ -93,10 +93,30 @@
 
     <insert id="insertFiles" parameterType="com.example.board.vo.FileVO">
         INSERT INTO FILE(BNO, FILENAME, ORIGINAL_FILENAME, UPLOAD_PATH, FILESIZE, FILETYPE, CREATEDATE, CREATEUSER)
-        VALUES (#{bno}, #{filename}, #{original_filename}, #{upload_path}, #{filesize}, #{filetype}, now(), #{createuser})
+        VALUES (#{bno}, #{filename}, #{original_filename}, #{upload_path}, #{filesize}, #{filetype}, now(),
+                #{createuser})
     </insert>
 
     <select id="getBoardNo" resultType="int">
-        SELECT MAX(NO) + 1 FROM BOARD
+        SELECT MAX(NO) + 1
+        FROM BOARD
+    </select>
+
+    <resultMap type="com.example.board.vo.FileVO" id="fileVO">
+        <result property="fno" column="fno"/>
+        <result property="bno" column="bno"/>
+        <result property="filename" column="filename"/>
+        <result property="original_filename" column="original_filename"/>
+        <result property="upload_path" column="upload_path"/>
+        <result property="filesize" column="filesize"/>
+        <result property="filetype" column="filetype"/>
+        <result property="createdate" column="createdate"/>
+        <result property="createuser" column="createuser"/>
+    </resultMap>
+
+    <select id="getFileList" parameterType="int" resultMap="fileVO">
+        SELECT *
+        FROM FILE
+        WHERE BNO = #{bno}
     </select>
 </mapper>

@@ -4,11 +4,16 @@ import com.example.board.util.FileUtil;
 import com.example.board.security.CustomUserDetails;
 import com.example.board.service.BoardService;
 import com.example.board.vo.*;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +91,7 @@ public class BoardController {
                 fileVO.setBno(maxBoardNo);
                 fileVO.setOriginal_filename(fileName);
                 fileVO.setFilename(FileUtil.getNewFileName(fileName));
-                fileVO.setUpload_path(uploadPath + fileName);
+                fileVO.setUpload_path(uploadPath + "\\" + fileName);
                 fileVO.setFilesize(x.getSize());
                 fileVO.setFiletype(FileUtil.getContentType(fileName));
                 fileVO.setCreateuser(user.getName());   //로그인 유저
@@ -134,8 +141,12 @@ public class BoardController {
                             HttpServletRequest request,
                             HttpServletResponse response) throws Exception {
         BoardVO boardVO = boardService.getDetailBoard(no);
+        List<FileVO> files = boardService.getFileList(no);
+        //리스트를 json 형태로 변환
+        String data = new Gson().toJson(files).replaceAll("\\\\", "-");
 
         model.addAttribute("boardVO", boardVO);
+        model.addAttribute("files", data);
 
         //조회수 쿠키 체크
         Cookie[] cookies = request.getCookies();
@@ -259,5 +270,22 @@ public class BoardController {
         rttr.addFlashAttribute("exception", exception);
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/imageDisplay")
+    @ResponseBody
+    public ResponseEntity<byte[]> display(String filePath) {
+        File file = new File(filePath);
+        ResponseEntity<byte[]> image = null;
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", Files.probeContentType(file.toPath()));
+            image = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), headers, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return image;
     }
 }

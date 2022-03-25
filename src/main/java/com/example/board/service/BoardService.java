@@ -137,4 +137,8 @@ public class BoardService implements UserDetailsService {
     public int getBoardNo() throws Exception {
         return boardMapper.getBoardNo();
     }
+
+    public List<FileVO> getFileList(int bno) throws Exception {
+        return boardMapper.getFileList(bno);
+    }
 }

@@ -39,7 +39,7 @@
             limitedFileCnt--;
         }
 
-        function fn_Submit(){
+        function fn_submit(){
             debugger;
             let formData = new FormData();
             let fileInput = $('.files');
@@ -111,7 +111,7 @@
                 </ul>
             </div>
             <button type="button" id="fileAdd" class="btn btn-primary">파일추가</button>
-            <button type="submit" id="write" class="btn btn-primary" onclick="fn_Submit()">작성</button>
+            <button type="submit" id="write" class="btn btn-primary" onclick="fn_submit()">작성</button>
             <button type="button" class="btn btn-info" onclick="history.back()">뒤로가기</button>
 <%--        </form>--%>
     </div>
