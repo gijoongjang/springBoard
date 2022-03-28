@@ -7,8 +7,11 @@ import com.example.board.vo.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
@@ -287,5 +292,35 @@ public class BoardController {
         }
 
         return image;
+    }
+
+    @GetMapping("/fileDownload")
+    public ResponseEntity<Resource> fileDownload(@RequestHeader("User-Agent") String agent, String filePath) {
+        try {
+            Resource resource = new FileSystemResource(filePath);
+
+            if(!resource.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            String fileName = FileUtil.getOriginalFileName(resource.getFilename());
+
+            if(agent.contains("Trident")) {     //IE
+                fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "");
+            } else if(agent.contains("Edge")) { //Edge
+                fileName = URLEncoder.encode(fileName, "UTF-8");
+            } else {                            //Chrome
+                fileName = new String(fileName.getBytes(StandardCharsets.UTF_8), "ISO-8859-1");
+            }
+
+            return ResponseEntity.ok()
+                            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+                            .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.getFile().length()))
+                            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString())
+                            .body(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

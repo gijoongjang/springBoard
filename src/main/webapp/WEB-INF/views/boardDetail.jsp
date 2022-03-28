@@ -29,13 +29,27 @@
                 console.log(e)
 
                 if(e.filetype.toUpperCase().includes('PNG') || e.filetype.toUpperCase().includes('JPG')) {
-                    str += "<li><img src = '/imageDisplay?filePath=" + encodeURI(e.upload_path.replace(/--/g, "\\")) + "'>" + e.original_filename + "</li>";
+                    str += "<li>"
+                    str +=    "<img src = '/imageDisplay?filePath=" + encodeURI(e.upload_path.replace(/--/g, "\\")) + "' class='image'>" + e.original_filename
+                    str += "</li>";
                 } else {
-                    str += "<li><img src = '/resources/img/file.png'>" + e.filename + "</li>";
+                    str += "<li>"
+                    str +=    "<a href='/fileDownload?filePath="+ encodeURI(e.upload_path.replace(/--/g, "\\")) +"'>"
+                    str +=    "<img src = '/resources/img/file.png'>" + e.filename
+                    str +=    "</a>"
+                    str += "</li>"
                 }
             })
 
             $('.fileList ul').append(str);
+
+            $('.image').on("click", function (e){
+                let newTab = window.open();
+                let data = e.target.src;
+                setTimeout(function(){
+                    newTab.document.body.innerHTML = "<img src = '"+ data +"'>";
+                }, 500);
+            });
         });
     </script>
 </head>

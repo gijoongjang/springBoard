@@ -40,7 +40,6 @@
         }
 
         function fn_submit(){
-            debugger;
             let formData = new FormData();
             let fileInput = $('.files');
             let jsonObj = {

@@ -26,4 +26,11 @@ public class FileUtil {
 
         return fileName.split("\\.")[1];
     }
+
+    public static String getOriginalFileName(String fileName) {
+        if(fileName.equals("") || fileName == null)
+            return "";
+
+        return fileName.substring(fileName.indexOf("_") + 1);
+    }
 }
