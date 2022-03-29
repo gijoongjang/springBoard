@@ -1,7 +1,9 @@
 package com.example.board.config;
 
+import com.example.board.security.CustomAuthSuccessHandler;
 import com.example.board.service.BoardService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AuthenticationFailureHandler failureHandler;
 
+    @Autowired
+    CustomAuthSuccessHandler customAuthSuccessHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -36,14 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").permitAll() //TODO 권한에 따라 정리 필요
+                .antMatchers("/**").permitAll()
+                .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                 .and()
             .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/loginProcess")
-                .failureHandler(failureHandler) //로그인 실패 시
-                .successForwardUrl("/")
-                .defaultSuccessUrl("/")      // 로그인 성공 시 이동할 페이지
+                .successHandler(customAuthSuccessHandler) //로그인 성공 시
+                .failureHandler(failureHandler)           //로그인 실패 시
+//                .defaultSuccessUrl("/")        // 로그인 성공 시 이동할 페이지
                 .and()
             .cors().disable()
             .csrf().disable()
@@ -52,6 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true);
+//                .and()
+//            .exceptionHandling().accessDeniedHandler();
     }
 
     @Override

@@ -69,8 +69,8 @@
     <!--    </select>-->
 
     <insert id="createUser" parameterType="com.example.board.vo.UserVO">
-        INSERT INTO USER(ID, PASSWORD, NAME, REGDATE)
-        VALUES (#{id}, #{password}, #{name}, NOW())
+        INSERT INTO USER(ID, PASSWORD, NAME, REGDATE, ROLE)
+        VALUES (#{id}, #{password}, #{name}, NOW(), #{role})
     </insert>
 
     <select id="idCheck" parameterType="String" resultType="int">

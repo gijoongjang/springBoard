@@ -84,6 +84,12 @@ public class BoardService implements UserDetailsService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userVO.setPassword(passwordEncoder.encode(userVO.getPassword()));
 
+        if(userVO.getId().equals("admin")) {
+            userVO.setRole("ROLE_ADMIN");
+        } else {
+            userVO.setRole("ROLE_USER");
+        }
+
         boardMapper.createUser(userVO);
     }
 

@@ -223,20 +223,6 @@ public class BoardController {
         return "login";
     }
 
-//    @RequestMapping(value="/index", method = {RequestMethod.GET, RequestMethod.POST})
-//    public String userLogin(UserVO userVO, HttpServletRequest request, RedirectAttributes ra) throws Exception {
-//        HttpSession session = request.getSession();
-//        UserVO user = boardService.userLogin(userVO);
-//
-//        if(user == null) {
-//            session.setAttribute("user", null);
-//        } else {
-//            session.setAttribute("user", user);
-//        }
-//
-//        return "redirect:/";
-//    }
-
     @GetMapping("/signUpForm")
     public String signUpForm() {
         return "signUp";
@@ -322,5 +308,13 @@ public class BoardController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    /*
+    * admin
+    */
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
     }
 }

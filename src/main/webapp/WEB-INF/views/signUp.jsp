@@ -24,7 +24,7 @@
             }).then(function(result) {
                 if(result.message){
                     alert("회원가입 성공!")
-                    location.href = "/index"
+                    location.href = "/"
                 } else {
                     alert(result.errMessage.join("\n"));
                 }

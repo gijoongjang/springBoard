@@ -13,7 +13,7 @@
 </head>
 <body>
 <%@ include file="bootstrap.jsp" %>
-<sec:authorize access="isAuthenticated()">
+<sec:authorize access="isAuthenticated() and hasRole('ROLE_USER')">
     <div id="navigation">
         <ul class="nav nav-tabs">
             <li>
@@ -21,6 +21,15 @@
             </li>
             <li>
                 <a href="#" onclick="location.href='/boardList'">게시글 목록</a>
+            </li>
+        </ul>
+    </div>
+</sec:authorize>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+    <div id="navigation">
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="#" onclick="location.href='/admin/userList'">회원목록</a>
             </li>
         </ul>
     </div>
