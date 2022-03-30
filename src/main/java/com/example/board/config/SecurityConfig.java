@@ -1,5 +1,6 @@
 package com.example.board.config;
 
+import com.example.board.security.CustomAccessDeniedHandler;
 import com.example.board.security.CustomAuthSuccessHandler;
 import com.example.board.service.BoardService;
 import lombok.AllArgsConstructor;
@@ -41,25 +42,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").permitAll()
                 .antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/**").permitAll()
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/loginProcess")
                 .successHandler(customAuthSuccessHandler) //로그인 성공 시
                 .failureHandler(failureHandler)           //로그인 실패 시
-//                .defaultSuccessUrl("/")        // 로그인 성공 시 이동할 페이지
-                .and()
-            .cors().disable()
-            .csrf().disable()
-            .headers().frameOptions().disable();
+            .and()
+                .cors().disable()
+                .csrf().disable()
+                .headers().frameOptions().disable();
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
-                .invalidateHttpSession(true);
-//                .and()
-//            .exceptionHandling().accessDeniedHandler();
+                .invalidateHttpSession(true)
+            .and()
+                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
     }
 
     @Override
