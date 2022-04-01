@@ -147,4 +147,8 @@ public class BoardService implements UserDetailsService {
     public List<FileVO> getFileList(int bno) throws Exception {
         return boardMapper.getFileList(bno);
     }
+
+    public List<UserVO> getUserList() {
+        return boardMapper.getUserList();
+    }
 }

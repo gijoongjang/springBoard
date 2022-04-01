@@ -41,4 +41,6 @@ public interface BoardMapper {
     int getBoardNo() throws Exception;
 
     List<FileVO> getFileList(int bno) throws Exception;
+
+    List<UserVO> getUserList();
 }

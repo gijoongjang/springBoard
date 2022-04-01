@@ -119,4 +119,10 @@
         FROM FILE
         WHERE BNO = #{bno}
     </select>
+
+    <select id="getUserList" resultType="com.example.board.vo.UserVO">
+        SELECT *
+        FROM USER
+        WHERE ROLE NOT IN ('ROLE_ADMIN')
+    </select>
 </mapper>

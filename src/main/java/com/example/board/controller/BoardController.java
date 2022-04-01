@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -310,6 +311,11 @@ public class BoardController {
         }
     }
 
+    @GetMapping("/denied")
+    public String denied() {
+        return "denied";
+    }
+
     /*
     * admin
     */
@@ -318,8 +324,12 @@ public class BoardController {
         return "admin";
     }
 
-    @GetMapping("/denied")
-    public String denied() {
-        return "denied";
+    @GetMapping("/admin/userList")
+    public String userList(Model model) {
+        List<UserVO> userList = boardService.getUserList();
+
+        model.addAttribute("userList", userList);
+
+        return "userList";
     }
 }
