@@ -45,7 +45,7 @@ div#header	li a {
 }
 
 div#navigation {
-    padding-top: 10px;
+    padding-top: 30px;
 }
 
 div#content {
@@ -66,10 +66,19 @@ div#footer #footerText {
     text-align: center;
 }
 
-img {
+img .image{
     width: 300px;
     height: 150px;
     object-fit: cover;
 }
+
+#logo {
+    float: left;
+    width: 55px;
+    height: 55px;
+    margin-left: 25px;
+}
+
+
 
 
