@@ -125,4 +125,10 @@
         FROM USER
         WHERE ROLE NOT IN ('ROLE_ADMIN')
     </select>
+
+    <delete id="deleteUser" parameterType="String">
+        DELETE
+        FROM USER
+        WHERE ID = #{id}
+    </delete>
 </mapper>

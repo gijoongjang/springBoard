@@ -43,4 +43,6 @@ public interface BoardMapper {
     List<FileVO> getFileList(int bno) throws Exception;
 
     List<UserVO> getUserList();
+
+    void deleteUser(String id) throws Exception;
 }

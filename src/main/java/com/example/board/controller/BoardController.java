@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -331,5 +330,21 @@ public class BoardController {
         model.addAttribute("userList", userList);
 
         return "userList";
+    }
+
+    @PostMapping("/admin/userDelete")
+    @ResponseBody
+    public Map<String, Object> userDelete(@RequestParam("id") String id) {
+        Map<String, Object> retMap = new HashMap<>();
+
+        try {
+            retMap.put("succeed", true);
+            boardService.deleteUser(id);
+        } catch (Exception e) {
+            retMap.put("succeed", false);
+            e.printStackTrace();
+        }
+
+        return retMap;
     }
 }

@@ -12,6 +12,22 @@
 <head>
     <title>회원목록</title>
     <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
+    <script>
+        function fn_userDelBtn(id) {
+            $.ajax({
+                url:"/admin/userDelete",
+                type:"POST",
+                data: { id : id }
+            }).then(function(result) {
+                if(result.succeed) {
+                    alert("탈퇴 처리 완료!")
+                    location.reload()
+                } else {
+                    console.log("탈퇴 처리 실패")
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <%@ include file="bootstrap.jsp" %>
@@ -35,7 +51,7 @@
                     <td>${userList.name}</td>
                     <td>${userList.id}</td>
                     <td><fmt:formatDate value ="${userList.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
-                    <td><button type="button" id="delete" class="btn btn-danger">강제탈퇴</button></td>
+                    <td><button type="button" class="btn btn-danger" onclick="fn_userDelBtn('${userList.id}')">강제탈퇴</button></td>
                 </tr>
             </c:forEach>
         </table>

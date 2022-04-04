@@ -151,4 +151,9 @@ public class BoardService implements UserDetailsService {
     public List<UserVO> getUserList() {
         return boardMapper.getUserList();
     }
+
+    @Transactional
+    public void deleteUser(String id) throws Exception {
+        boardMapper.deleteUser(id);
+    }
 }
