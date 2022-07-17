@@ -13,7 +13,7 @@ Java, Spring Boot, Spring Security, MyBatis, JSP, JavaScript, jQuery, MySQL
 - 회원가입
 - 로그인(User/Admin)
 ### User
-- 게시판 등록, 수정, 삭제
+- 게시판 등록, 조회, 수정, 삭제
 - 게시판 파일 다중 업로드
 - 쿠키 이용한 조회수 체크
 ### Admin
